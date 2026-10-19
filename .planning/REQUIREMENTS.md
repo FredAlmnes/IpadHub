@@ -112,11 +112,45 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| DISP-01 | Phase 1 | Pending |
+| DISP-02 | Phase 1 | Pending |
+| DISP-03 | Phase 1 | Pending |
+| DISP-04 | Phase 1 | Pending |
+| DISP-05 | Phase 1 | Pending |
+| DISP-06 | Phase 1 | Pending |
+| DISP-07 | Phase 1 | Pending |
+| DISP-08 | Phase 1 | Pending |
+| DISP-09 | Phase 1 | Pending |
+| DISP-10 | Phase 1 | Pending |
+| SEC-01 | Phase 1 | Pending |
+| SEC-02 | Phase 1 | Pending |
+| SEC-03 | Phase 1 | Pending |
+| SEC-04 | Phase 3 | Pending |
+| BUS-01 | Phase 2 | Pending |
+| BUS-02 | Phase 2 | Pending |
+| BUS-03 | Phase 2 | Pending |
+| BUS-04 | Phase 2 | Pending |
+| BUS-05 | Phase 2 | Pending |
+| WTHR-01 | Phase 2 | Pending |
+| WTHR-02 | Phase 2 | Pending |
+| WTHR-03 | Phase 2 | Pending |
+| CAL-01 | Phase 3 | Pending |
+| MAIL-01 | Phase 4 | Pending |
+| CAL-02 | Phase 3 | Pending |
+| MAIL-02 | Phase 4 | Pending |
+| CAL-03 | Phase 3 | Pending |
+| MAIL-03 | Phase 4 | Pending |
+| CAL-04 | Phase 3 | Pending |
+| MAIL-04 | Phase 4 | Pending |
+| CAL-05 | Phase 3 | Pending |
+| MAIL-05 | Phase 4 | Pending |
+| CAL-06 | Phase 3 | Pending |
+| MAIL-06 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 34 total
-- Mapped to phases: 0
-- Unmapped: 34 ⚠️
+- Mapped to phases: 34
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-10-19*
