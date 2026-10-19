@@ -21,7 +21,7 @@ Et raskt blikk på iPaden gir meg det jeg trenger for å komme meg ut døra og h
 - [ ] Værvisning for nå og utover dagen
 - [ ] Dagens hendelser fra Google Kalender
 - [ ] Viktige e-poster fra Gmail som bør følges opp, vurdert av AI (ikke bare antall uleste)
-- [ ] Alltid-på visning i fullskjerm på iPad (iPadOS 16+), oppdaterer seg selv uten at man rører den
+- [ ] Alltid-på visning i fullskjerm på iPad (iPadOS 18.4+), oppdaterer seg selv uten at man rører den
 - [ ] Nattmodus: skjermen dimmes eller blir mørk med bare klokken om natten
 
 **Senere – Handleliste**
@@ -45,14 +45,15 @@ Et raskt blikk på iPaden gir meg det jeg trenger for å komme meg ut døra og h
 - Flere brukere/kontoer i v1 — starter med bare meg, utvides senere
 - Native iOS-app i App Store — en webapp i Safari holder på en moderne iPad
 - Integrasjon mot eksisterende handlelisteapper (Bring!, Keep osv.) — valgt egen enkel liste i stedet
-- Støtte for eldre iPader/gammel Safari — iPaden har iPadOS 16+
+- Støtte for eldre iPader/gammel Safari — iPaden har iPadOS 18.4+
 - Flere holdeplasser og andre transportformer — ett busstopp holder
 
 ## Context
 
 - Bor i Norge; kollektivdata hentes fra Entur, som dekker hele landet.
 - Bruker én Google-konto til både Gmail og Google Kalender. Trenger OAuth med lesetilgang.
-- iPaden er nyere (iPadOS 16+), så moderne Safari og PWA-funksjoner er tilgjengelige.
+- iPaden kjører iPadOS 18.4 eller nyere, så Screen Wake Lock fungerer i hjemskjerm-PWA (WebKit-bug 254545 er fikset).
+- «Bør følges opp» betyr innkommende mail som krever svar eller handling, pluss frister, regninger og betalinger. Sendte mailer uten svar teller ikke.
 - iPaden står på hele døgnet, så lav belastning, at den henter seg inn igjen etter nettverksbrudd og at den ikke brenner seg inn i skjermen betyr noe.
 - AI-vurdering av e-post betyr at innholdet sendes til en språkmodell (Claude). Personvern og kostnad må tas med i vurderingen.
 - Stemmestyring med kodeord i nettleseren har begrensninger (mikrofontilgang, at den alltid må lytte i Safari). Dette må utforskes når vi kommer dit.
@@ -61,7 +62,7 @@ Et raskt blikk på iPaden gir meg det jeg trenger for å komme meg ut døra og h
 
 - **Hosting**: Backend i skyen på gratis eller billig nivå (f.eks. Vercel/Cloudflare). Ingen maskin hjemme.
 - **Budsjett**: Lave løpende kostnader. Hold AI-kall og API-bruk nøkterne.
-- **Plattform**: Webapp som kjører i Safari på iPad (iPadOS 16+), også brukbar på mobil for handlelisten.
+- **Plattform**: Webapp som kjører i Safari på iPad (iPadOS 18.4+), også brukbar på mobil for handlelisten.
 - **Sikkerhet**: Google-tokens og API-nøkler må ligge på serveren, aldri i klienten. Skjermen viser privat e-post, så tilgang må beskyttes.
 - **Brukere**: Én bruker i v1, men datamodellen bør ikke stenge for flere senere.
 
