@@ -15,11 +15,13 @@ function readStorage(key: string): string | null {
   }
 }
 
-function writeStorage(key: string, value: string): void {
+// Returns true only if the value can be read back, so callers know it survives a reload.
+function writeStorage(key: string, value: string): boolean {
   try {
     localStorage.setItem(key, value);
+    return localStorage.getItem(key) === value;
   } catch {
-    // storage unavailable: the reload still happens
+    return false;
   }
 }
 
@@ -29,9 +31,11 @@ function readLastReloadAt(): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+// Without persistent storage the guards cannot remember a reload, so reloading would
+// loop (WR-03). Skip self-healing reloads entirely in that case.
 function reload(dailyKey?: string): void {
-  writeStorage(LAST_RELOAD_KEY, String(Date.now()));
-  if (dailyKey) writeStorage(LAST_DAILY_KEY, dailyKey);
+  if (!writeStorage(LAST_RELOAD_KEY, String(Date.now()))) return;
+  if (dailyKey && !writeStorage(LAST_DAILY_KEY, dailyKey)) return;
   location.reload();
 }
 

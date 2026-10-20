@@ -2,6 +2,12 @@
 // Never touches /api/*, /admin* or /auth/* (private data must never be cached).
 const SHELL = "ipadhub-shell-v1";
 const ASSETS = "ipadhub-assets-v1";
+const MAX_ASSETS = 60; // old hashed assets pile up across deploys on an always-on device
+
+async function trimAssets(cache) {
+  const keys = await cache.keys();
+  await Promise.all(keys.slice(0, Math.max(0, keys.length - MAX_ASSETS)).map((k) => cache.delete(k)));
+}
 
 self.addEventListener("install", () => self.skipWaiting());
 
@@ -50,7 +56,12 @@ self.addEventListener("fetch", (event) => {
         const hit = await cache.match(req);
         if (hit) return hit;
         const res = await fetch(req);
-        if (res.status === 200) await cache.put(req, res.clone());
+        // A missing asset gets the SPA fallback (index.html, 200); never cache that as an asset.
+        const type = res.headers.get("content-type") || "";
+        if (res.status === 200 && !type.includes("text/html")) {
+          await cache.put(req, res.clone());
+          await trimAssets(cache);
+        }
         return res;
       })(),
     );
