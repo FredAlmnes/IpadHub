@@ -40,6 +40,30 @@ Live på https://ipadhub.fredrik-almnes.workers.dev (workers.dev, Cloudflare gra
 
 Når D1 `database_id` byttes ut, er lokal tilstand ny: kjør `npm run db:migrate:local` på nytt.
 
+## Produksjon
+
+Innlogging på `/admin` bruker Google (OIDC, kun `openid email`). OAuth-klienten er av typen «Web application», og samtykkeskjermen er publisert som «In production» (ikke «Testing», ellers utløper refresh-tokens etter 7 dager i senere faser).
+
+Hemmeligheter som må være satt som wrangler secrets (kun navn, aldri verdier):
+
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `SESSION_SECRET`
+- `ADMIN_EMAILS` (kommaseparert liste med Google-adresser som får tilgang)
+
+Sett hver med `npx wrangler secret put NAVN` og kontroller med `npx wrangler secret list`.
+
+Autoriserte redirect-URIer i Google-klienten:
+
+- `https://ipadhub.fredrik-almnes.workers.dev/auth/google/callback`
+- `http://localhost:5173/auth/google/callback`
+
+Nødløsning hvis Google-innloggingen slutter å virke: godkjenn paringskoden fra terminalen:
+
+```sh
+npm run pair:approve -- --remote --code XXXX-XXXX --email <adressen i ADMIN_EMAILS>
+```
+
 ## Hemmeligheter
 
 Repoet er offentlig. Hemmeligheter skal kun ligge i `.dev.vars` (ignorert av git) eller som wrangler secrets, aldri i koden.
