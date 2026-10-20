@@ -8,6 +8,7 @@ files_reviewed_note: "Security-sensitive worker, client hooks/lib, service worke
 findings:
   critical: 0
   warning: 6
+  fixed: [WR-03, WR-06]
   info: 5
   total: 11
 status: issues_found
@@ -44,7 +45,7 @@ No blockers. The weaknesses are in robustness: an unauthenticated pairing endpoi
 **Issue:** The request is marked `consumed` before the device is inserted. If the insert fails, the pairing is lost. If the poll response is dropped after the server consumed it, the iPad's next poll returns `consumed` and the client silently requests a new code, leaving an active device row nobody holds a cookie for.
 **Fix:** Do the claim and the device insert in one `db.batch([...])`, or make the client treat `consumed` after an `approved` poll error as "retry the same poll".
 
-### WR-03: Daily reload loops if localStorage is unavailable
+### WR-03: Daily reload loops if localStorage is unavailable — FIXED (d9540e0)
 **File:** `src/client/hooks/useAutoReload.ts:18-24, 45-57`
 **Issue:** `writeStorage` swallows errors, so `LAST_DAILY_KEY` is never persisted when storage is blocked. The daily check runs on mount and does not use `canReload`, so between 03:30 and 06:00 Oslo the page reloads on every load — a continuous reload loop for 2.5 hours.
 **Fix:** Keep an in-memory or sessionStorage fallback for the daily key, or apply `canReload(readLastReloadAt(), nowMs)` before the daily reload with a module-level flag when storage fails.
@@ -59,7 +60,7 @@ No blockers. The weaknesses are in robustness: an unauthenticated pairing endpoi
 **Issue:** Login succeeds even if the stored `googleSub` differs from the incoming `sub`. Emails can be recycled or reassigned; the allowlist limits exposure, but the check is cheap.
 **Fix:** If `existing.googleSub && existing.googleSub !== input.sub`, reject the login (throw → redirect to `failed`).
 
-### WR-06: Service worker asset cache grows without bound and can store SPA fallback HTML under asset URLs
+### WR-06: Service worker asset cache grows without bound and can store SPA fallback HTML under asset URLs — FIXED (d9540e0)
 **File:** `public/sw.js:3-4, 46-56`
 **Issue:** The constant cache name `ipadhub-assets-v1` never evicts old hashed assets across deploys on an always-on device. With `not_found_handling: single-page-application`, a missing `/assets/*` URL returns `index.html` with 200, which the SW then caches cache-first under the asset URL — a script request can get HTML back permanently.
 **Fix:** Only cache responses whose `content-type` is not `text/html` (and `res.ok`). Prune the assets cache on `activate` or cap the entry count.
