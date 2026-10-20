@@ -21,8 +21,8 @@ Et raskt blikk på iPaden gir meg det jeg trenger for å komme meg ut døra og h
 - [ ] Værvisning for nå og utover dagen
 - [ ] Dagens hendelser fra Google Kalender
 - [ ] Viktige e-poster fra Gmail som bør følges opp, vurdert av AI (ikke bare antall uleste)
-- [ ] Alltid-på visning i fullskjerm på iPad (iPadOS 18.4+), oppdaterer seg selv uten at man rører den
-- [ ] Nattmodus: skjermen dimmes eller blir mørk med bare klokken om natten
+- [x] Alltid-på visning i fullskjerm på iPad (iPadOS 18.4+), oppdaterer seg selv uten at man rører den — bygget i fase 1, venter på iPad-test (01-HUMAN-UAT.md)
+- [x] Nattmodus: skjermen dimmes eller blir mørk med bare klokken om natten — bygget i fase 1, venter på iPad-test
 
 **Senere – Handleliste**
 - [ ] Egen enkel handleliste som synkes mellom iPad og telefon
@@ -96,4 +96,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-19 after initialization*
+*Last updated: 2026-10-20 after Phase 1 (deployed to https://ipadhub.fredrik-almnes.workers.dev; on-device iPad checks pending)*
