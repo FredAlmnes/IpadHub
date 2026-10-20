@@ -9,22 +9,22 @@ Krav til første versjon («bare visningen»). Hvert krav kobles til en fase i r
 
 ### Display (skjerm og skall)
 
-- [ ] **DISP-01**: Bruker kan legge appen på iPadens hjemskjerm og åpne den i fullskjerm uten nettleserlinjer (standalone PWA)
-- [ ] **DISP-02**: Bruker ser en stor klokke (24t, uten sekunder) med dato og ukenummer på norsk, alltid i Europe/Oslo-tid, også rundt sommer- og vintertid
-- [ ] **DISP-03**: Skjermen holder seg våken hele døgnet via Screen Wake Lock (iPadOS 18.4+), som hentes på nytt når appen blir synlig igjen
-- [ ] **DISP-04**: Hver modul oppdaterer seg selv i bakgrunnen uten at bruker rører skjermen, og henter nye data når nettet kommer tilbake
-- [ ] **DISP-05**: Bruker ser per modul når dataene sist ble oppdatert, og får en tydelig markering når data er gamle eller appen er offline
-- [ ] **DISP-06**: Når én modul feiler, fungerer resten av skjermen som normalt
-- [ ] **DISP-07**: Om natten (konfigurerbart tidsrom) bytter skjermen automatisk til en mørk, dempet visning med bare klokken
-- [ ] **DISP-08**: Innholdet flytter seg litt med jevne mellomrom for å unngå innbrenning
-- [ ] **DISP-09**: Appen laster seg selv inn på nytt én gang i døgnet og når en ny versjon er publisert, uten at bruker må gjøre noe
-- [ ] **DISP-10**: Bruker følger en oppsettsjekkliste for iPaden (Auto-Lock, Guided Access, lading, lysstyrke-snarvei)
+- [x] **DISP-01**: Bruker kan legge appen på iPadens hjemskjerm og åpne den i fullskjerm uten nettleserlinjer (standalone PWA)
+- [x] **DISP-02**: Bruker ser en stor klokke (24t, uten sekunder) med dato og ukenummer på norsk, alltid i Europe/Oslo-tid, også rundt sommer- og vintertid
+- [x] **DISP-03**: Skjermen holder seg våken hele døgnet via Screen Wake Lock (iPadOS 18.4+), som hentes på nytt når appen blir synlig igjen
+- [x] **DISP-04**: Hver modul oppdaterer seg selv i bakgrunnen uten at bruker rører skjermen, og henter nye data når nettet kommer tilbake
+- [x] **DISP-05**: Bruker ser per modul når dataene sist ble oppdatert, og får en tydelig markering når data er gamle eller appen er offline
+- [x] **DISP-06**: Når én modul feiler, fungerer resten av skjermen som normalt
+- [x] **DISP-07**: Om natten (konfigurerbart tidsrom) bytter skjermen automatisk til en mørk, dempet visning med bare klokken
+- [x] **DISP-08**: Innholdet flytter seg litt med jevne mellomrom for å unngå innbrenning
+- [x] **DISP-09**: Appen laster seg selv inn på nytt én gang i døgnet og når en ny versjon er publisert, uten at bruker må gjøre noe
+- [x] **DISP-10**: Bruker følger en oppsettsjekkliste for iPaden (Auto-Lock, Guided Access, lading, lysstyrke-snarvei)
 
 ### Security (tilgang)
 
-- [ ] **SEC-01**: Bruker kan pare iPaden én gang med en engangskode og forblir innlogget permanent uten å se en innloggingsskjerm
-- [ ] **SEC-02**: Alle data-endepunkter avviser forespørsler uten gyldig enhetstoken, så private data (kalender og e-post) ikke kan leses av andre
-- [ ] **SEC-03**: Bruker kan trekke tilbake tilgangen til en paret enhet
+- [x] **SEC-01**: Bruker kan pare iPaden én gang med en engangskode og forblir innlogget permanent uten å se en innloggingsskjerm
+- [x] **SEC-02**: Alle data-endepunkter avviser forespørsler uten gyldig enhetstoken, så private data (kalender og e-post) ikke kan leses av andre
+- [x] **SEC-03**: Bruker kan trekke tilbake tilgangen til en paret enhet
 - [ ] **SEC-04**: Google-tokens og API-nøkler ligger kun på serveren (krypterte i databasen eller som secrets) og sendes aldri til klienten
 
 ### Bus (kollektiv)
@@ -112,19 +112,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DISP-01 | Phase 1 | Pending |
-| DISP-02 | Phase 1 | Pending |
-| DISP-03 | Phase 1 | Pending |
-| DISP-04 | Phase 1 | Pending |
-| DISP-05 | Phase 1 | Pending |
-| DISP-06 | Phase 1 | Pending |
-| DISP-07 | Phase 1 | Pending |
-| DISP-08 | Phase 1 | Pending |
-| DISP-09 | Phase 1 | Pending |
-| DISP-10 | Phase 1 | Pending |
-| SEC-01 | Phase 1 | Pending |
-| SEC-02 | Phase 1 | Pending |
-| SEC-03 | Phase 1 | Pending |
+| DISP-01 | Phase 1 | Complete |
+| DISP-02 | Phase 1 | Complete |
+| DISP-03 | Phase 1 | Complete |
+| DISP-04 | Phase 1 | Complete |
+| DISP-05 | Phase 1 | Complete |
+| DISP-06 | Phase 1 | Complete |
+| DISP-07 | Phase 1 | Complete |
+| DISP-08 | Phase 1 | Complete |
+| DISP-09 | Phase 1 | Complete |
+| DISP-10 | Phase 1 | Complete |
+| SEC-01 | Phase 1 | Complete |
+| SEC-02 | Phase 1 | Complete |
+| SEC-03 | Phase 1 | Complete |
 | SEC-04 | Phase 3 | Pending |
 | BUS-01 | Phase 2 | Pending |
 | BUS-02 | Phase 2 | Pending |

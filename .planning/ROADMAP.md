@@ -115,7 +115,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 (Fase 2 og 3 er uavhengige av 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Skall, enhetsparing og alltid-på klokke | 8/8 | Complete   | 2026-10-20 |
+| 1. Skall, enhetsparing og alltid-på klokke | 8/8 | Complete    | 2026-10-20 |
 | 2. Buss og vær | 0/TBD | Not started | - |
 | 3. Google-tilkobling og kalender | 0/TBD | Not started | - |
 | 4. Viktig e-post med AI | 0/TBD | Not started | - |
