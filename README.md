@@ -31,7 +31,14 @@ npm test
 
 ## Deploy
 
-Kjøres med `npm run deploy` (fylles ut i plan 01-03). Når D1 `database_id` byttes ut, er lokal tilstand ny: kjør `npm run db:migrate:local` på nytt.
+Live på https://ipadhub.fredrik-almnes.workers.dev (workers.dev, Cloudflare gratisplan, ekstern D1 `ipadhub`).
+
+1. Når migrasjoner endres: `npm run db:migrate:remote` først.
+2. Deretter `npm run deploy` (vite build + wrangler deploy).
+3. Hemmeligheter settes med `npx wrangler secret put NAVN`.
+4. Pare mot skyen: `npm run pair:approve -- --remote --code <kode> --email <epost> --name <navn>`.
+
+Når D1 `database_id` byttes ut, er lokal tilstand ny: kjør `npm run db:migrate:local` på nytt.
 
 ## Hemmeligheter
 
