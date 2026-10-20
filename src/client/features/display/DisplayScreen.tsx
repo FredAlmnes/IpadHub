@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import type { UseQueryResult } from "@tanstack/react-query";
-import type { Snapshot } from "../../../shared/contract";
+import type { SnapshotQuery } from "../../hooks/useSnapshot";
 import { useDrift } from "../../hooks/useDrift";
 import { useNightMode } from "../../hooks/useNightMode";
 import { DEFAULT_NIGHT } from "../../lib/night-mode";
 import { Clock } from "./Clock";
+import { ModuleGrid } from "./ModuleGrid";
 import { NightClock } from "./NightClock";
+import { OfflineMarker } from "./OfflineMarker";
 
 const FADE_TO_NIGHT_MS = 3000;
 const FADE_WAKE_IN_MS = 600;
@@ -21,7 +22,7 @@ function layerStyle(visible: boolean, durationMs: number): React.CSSProperties {
   };
 }
 
-export function DisplayScreen({ query }: { query: UseQueryResult<Snapshot, Error> }) {
+export function DisplayScreen({ query }: { query: SnapshotQuery }) {
   // Works offline: falls back to the hard-coded window when no snapshot has arrived.
   const cfg = query.data?.config ?? DEFAULT_NIGHT;
   const { mode, wake, waking } = useNightMode(cfg);
@@ -50,8 +51,11 @@ export function DisplayScreen({ query }: { query: UseQueryResult<Snapshot, Error
             <section className="col-span-5 flex flex-col justify-center">
               <Clock />
             </section>
-            <section className="col-span-7" data-region="modules" />
+            <section className="col-span-7" data-region="modules">
+              <ModuleGrid query={query} />
+            </section>
           </main>
+          <OfflineMarker query={query} />
         </div>
       </div>
       <div className="absolute inset-0" style={layerStyle(!day, nightMs)} aria-hidden={day}>
