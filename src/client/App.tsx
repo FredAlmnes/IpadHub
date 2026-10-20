@@ -1,3 +1,5 @@
+import { PairingScreen } from "./features/pairing/PairingScreen";
+
 export function App() {
-  return <main className="fixed inset-0 bg-bg text-text font-sans" />;
+  return <PairingScreen />;
 }
