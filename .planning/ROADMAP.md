@@ -32,11 +32,11 @@ IpadHub bygges som vertikale skiver, der hver fase gir en iPad som kan brukes i 
   4. Om natten bytter skjermen til en mørk, dempet visning med bare klokken, og innholdet flytter seg litt over tid mot innbrenning
   5. En forespørsel uten gyldig enhetstoken avvises, og bruker kan trekke tilbake tilgangen til en paret enhet; appen laster seg selv på nytt daglig og ved ny versjon, og oppsettsjekklisten for iPaden er fulgt
 
-**Plans:** 8 plans
+**Plans:** 1/8 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Skjelett A: scaffold, D1-skjema, iPaden viser en ekte paringskode, default-deny /api
+- [x] 01-01-PLAN.md — Skjelett A: scaffold, D1-skjema, iPaden viser en ekte paringskode, default-deny /api
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -115,7 +115,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 (Fase 2 og 3 er uavhengige av 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Skall, enhetsparing og alltid-på klokke | 0/8 | Not started | - |
+| 1. Skall, enhetsparing og alltid-på klokke | 1/8 | In Progress|  |
 | 2. Buss og vær | 0/TBD | Not started | - |
 | 3. Google-tilkobling og kalender | 0/TBD | Not started | - |
 | 4. Viktig e-post med AI | 0/TBD | Not started | - |
