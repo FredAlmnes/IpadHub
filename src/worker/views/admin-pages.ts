@@ -126,3 +126,48 @@ export function homePage(opts: {
       </section>`,
   );
 }
+
+export function revokePage(device: { id: string; name: string }) {
+  return page(
+    "Trekk tilbake · IpadHub",
+    html`<h1 class="${title} m-0">IpadHub</h1>
+      <section class="${card}">
+        <p class="m-0">
+          Trekk tilbake «${device.name}»? iPaden mister tilgangen med en gang og viser paringskoden igjen.
+        </p>
+        <form method="post" action="/admin/devices/${device.id}/revoke" class="m-0">
+          <button
+            type="submit"
+            class="h-12 w-full rounded-xl bg-destructive text-black font-semibold text-[16px] border-0 cursor-pointer"
+          >
+            Trekk tilbake
+          </button>
+        </form>
+        <a
+          href="/admin"
+          class="min-h-12 w-full rounded-xl border border-muted text-muted text-[16px] flex items-center justify-center no-underline box-border"
+          >Behold iPaden</a
+        >
+      </section>`,
+  );
+}
+
+export function setupPage(steps: { title: string; text: string }[]) {
+  return page(
+    "Oppsett av iPaden · IpadHub",
+    html`<header class="flex flex-col gap-2">
+        <a href="/admin" class="text-[16px] text-muted min-h-12 flex items-center no-underline">Tilbake</a>
+        <h1 class="${title} m-0">Oppsett av iPaden</h1>
+      </header>
+      <section class="${card}">
+        <ol class="m-0 pl-6 flex flex-col gap-4">
+          ${steps.map(
+            (s) => html`<li>
+              <div class="font-semibold">${s.title}</div>
+              <div class="text-muted">${s.text}</div>
+            </li>`,
+          )}
+        </ol>
+      </section>`,
+  );
+}

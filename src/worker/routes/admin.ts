@@ -1,12 +1,15 @@
 import { Hono } from "hono";
 import { csrf } from "hono/csrf";
+import { deleteCookie } from "hono/cookie";
 import { z } from "zod";
 import { getDb } from "../db/client";
-import { listActiveDevices } from "../lib/devices";
+import { getActiveDevice, listActiveDevices, revokeDevice } from "../lib/devices";
 import { approvePairing } from "../lib/pairing";
+import { ADMIN_COOKIE } from "../lib/session";
 import { adminAuth } from "../middleware/admin-auth";
 import type { AdminEnv } from "../middleware/admin-auth";
-import { errorPage, homePage, loginPage } from "../views/admin-pages";
+import { errorPage, homePage, loginPage, revokePage, setupPage } from "../views/admin-pages";
+import { SETUP_STEPS } from "../views/setup-checklist";
 
 export const adminRoutes = new Hono<AdminEnv>();
 
@@ -54,3 +57,25 @@ adminRoutes.post("/pair/approve", async (c) => {
     return c.html(errorPage(), 500);
   }
 });
+
+adminRoutes.get("/devices/:id/revoke", async (c) => {
+  const device = await getActiveDevice(getDb(c.env.DB), c.get("admin").userId, c.req.param("id"));
+  if (!device) return c.html(errorPage(), 404);
+  return c.html(revokePage(device));
+});
+
+adminRoutes.post("/devices/:id/revoke", async (c) => {
+  const db = getDb(c.env.DB);
+  const { userId } = c.get("admin");
+  const id = c.req.param("id");
+  const device = await getActiveDevice(db, userId, id);
+  if (!device || !(await revokeDevice(db, userId, id, Date.now()))) return c.html(errorPage(), 404);
+  return c.redirect(`/admin?revoked=${encodeURIComponent(device.name)}`, 302);
+});
+
+adminRoutes.post("/logout", (c) => {
+  deleteCookie(c, ADMIN_COOKIE, { path: "/" });
+  return c.redirect("/admin/login", 302);
+});
+
+adminRoutes.get("/oppsett", (c) => c.html(setupPage(SETUP_STEPS)));
