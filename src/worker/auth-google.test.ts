@@ -1,7 +1,7 @@
 import { env } from "cloudflare:workers";
 import { Hono } from "hono";
 import { createLocalJWKSet, exportJWK, generateKeyPair, SignJWT } from "jose";
-import type { JWK, KeyLike } from "jose";
+import type { JWK } from "jose";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import type { AppEnv } from "./env";
 import { createGoogleAuthRoutes } from "./routes/auth-google";
@@ -12,7 +12,7 @@ import { adminAuth } from "./middleware/admin-auth";
 const BASE = "https://ipadhub.test";
 const CLIENT_ID = "test-client-id.apps.googleusercontent.com";
 
-let privateKey: KeyLike | CryptoKey;
+let privateKey: CryptoKey;
 let jwks: ReturnType<typeof createLocalJWKSet>;
 
 type IdOpts = { aud?: string; nonce?: string; emailVerified?: boolean; email?: string; iss?: string };
