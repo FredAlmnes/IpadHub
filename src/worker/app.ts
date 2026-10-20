@@ -3,6 +3,8 @@ import type { AppEnv } from "./env";
 import { deviceAuth } from "./middleware/device-auth";
 import { pairRoutes } from "./routes/api-pair";
 import { snapshotRoutes } from "./routes/api-snapshot";
+import { adminRoutes } from "./routes/admin";
+import { createGoogleAuthRoutes } from "./routes/auth-google";
 
 export const app = new Hono<AppEnv>();
 
@@ -11,6 +13,9 @@ app.use("/api/*", async (c, next) => {
   await next();
   c.header("Cache-Control", "no-store");
 });
+
+app.route("/auth/google", createGoogleAuthRoutes());
+app.route("/admin", adminRoutes);
 
 app.route("/api/pair", pairRoutes);
 
