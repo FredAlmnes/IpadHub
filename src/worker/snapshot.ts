@@ -1,32 +1,34 @@
 import { eq } from "drizzle-orm";
-import { MODULE_KEYS, type ModuleSnapshot, type Snapshot } from "../shared/contract";
+import { ModuleSnapshot, type Snapshot } from "../shared/contract";
 import { getDb } from "./db/client";
 import { userSettings } from "./db/schema";
 import type { Env, UserContext } from "./env";
+import { getProviders } from "./providers/registry";
+import type { ModuleKey, Provider } from "./providers/types";
 
-export const STALE_AFTER_SEC: Record<(typeof MODULE_KEYS)[number], number> = {
-  bus: 180,
-  weather: 5400,
-  calendar: 1800,
-  mail: 1800,
-};
-
-export async function buildSnapshot(env: Env, user: UserContext, now: Date): Promise<Snapshot> {
+export async function buildSnapshot(
+  env: Env,
+  user: UserContext,
+  now: Date,
+  providers: Record<ModuleKey, Provider> = getProviders(env),
+): Promise<Snapshot> {
   const [settings] = await getDb(env.DB)
     .select()
     .from(userSettings)
     .where(eq(userSettings.userId, user.userId))
     .limit(1);
 
+  const entries = Object.entries(providers) as [ModuleKey, Provider][];
+  const results = await Promise.allSettled(entries.map(([, p]) => p.get({ env, user, now })));
   const modules: Record<string, ModuleSnapshot> = {};
-  for (const key of MODULE_KEYS) {
-    modules[key] = {
-      data: null,
-      fetchedAt: null,
-      status: "not_configured",
-      staleAfterSec: STALE_AFTER_SEC[key],
-    };
-  }
+  entries.forEach(([key, provider], i) => {
+    const r = results[i];
+    const parsed = r.status === "fulfilled" ? ModuleSnapshot.safeParse(r.value) : null;
+    // Thrown messages may contain secrets: never forwarded (T-01-34).
+    modules[key] = parsed?.success
+      ? parsed.data
+      : { data: null, fetchedAt: null, status: "error", error: "unavailable", staleAfterSec: provider.staleAfterSec };
+  });
 
   return {
     serverTime: now.toISOString(),
