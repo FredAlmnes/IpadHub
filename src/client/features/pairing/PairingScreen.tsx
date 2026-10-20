@@ -1,40 +1,120 @@
-import { useEffect, useRef, useState } from "react";
-import { startPairing } from "../../api";
+import { useEffect, useState } from "react";
+import { pollPairing, startPairing } from "../../api";
+import { CheckIcon } from "../../icons";
 
 const RETRY_DELAYS_MS = [3000, 6000, 12000, 30000];
+const POLL_INTERVAL_MS = 3000;
+const STORAGE_KEY = "ipadhub.pairing";
 
-export function PairingScreen() {
+type Stored = { code: string; pollSecret: string; expiresAt: number };
+
+function readStored(): Stored | null {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const v = JSON.parse(raw) as Partial<Stored>;
+    if (typeof v.code === "string" && typeof v.pollSecret === "string" && typeof v.expiresAt === "number") {
+      return v.expiresAt > Date.now() ? (v as Stored) : null;
+    }
+  } catch {
+    // ignore corrupt storage
+  }
+  return null;
+}
+
+function writeStored(v: Stored) {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(v));
+  } catch {
+    // storage unavailable: resume simply won't work
+  }
+}
+
+function clearStored() {
+  try {
+    sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+export function PairingScreen({ onPaired }: { onPaired: () => void }) {
   const [code, setCode] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
-  // Held in state only for now; polling and resume come in plan 01-02.
-  const [, setPollSecret] = useState<string | null>(null);
-  const started = useRef(false);
+  const [approved, setApproved] = useState(false);
+  const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    // Guard against React StrictMode double-invoke.
-    if (started.current) return;
-    started.current = true;
-
-    let attempt = 0;
+    let cancelled = false;
+    const timers = new Set<ReturnType<typeof setTimeout>>();
+    const sleep = (ms: number) =>
+      new Promise<void>((resolve) => {
+        const t = setTimeout(() => {
+          timers.delete(t);
+          resolve();
+        }, ms);
+        timers.add(t);
+      });
 
     const run = async () => {
-      try {
-        const res = await startPairing();
-        setCode(res.code);
-        setPollSecret(res.pollSecret);
-        setFailed(false);
-      } catch {
-        setFailed(true);
-        const delay = RETRY_DELAYS_MS[Math.min(attempt, RETRY_DELAYS_MS.length - 1)]!;
-        attempt += 1;
-        setTimeout(run, delay);
+      let failures = 0;
+      let current: Stored | null = readStored();
+      if (current) setCode(current.code);
+
+      while (!cancelled) {
+        try {
+          if (!current) {
+            const res = await startPairing();
+            if (cancelled) return;
+            current = { code: res.code, pollSecret: res.pollSecret, expiresAt: Date.now() + res.expiresIn * 1000 };
+            writeStored(current);
+            setCode(current.code);
+            setFailed(false);
+            failures = 0;
+          }
+          await sleep(POLL_INTERVAL_MS);
+          if (cancelled) return;
+          const { status } = await pollPairing(current.pollSecret);
+          if (cancelled) return;
+          setFailed(false);
+          failures = 0;
+          if (status === "approved") {
+            clearStored();
+            setApproved(true);
+            await sleep(1500);
+            if (cancelled) return;
+            setFading(true);
+            await sleep(600);
+            if (cancelled) return;
+            onPaired();
+            return;
+          }
+          if (status === "expired" || status === "consumed") {
+            // Silently swap in a new code.
+            clearStored();
+            current = null;
+          }
+        } catch {
+          if (cancelled) return;
+          setFailed(true);
+          await sleep(RETRY_DELAYS_MS[Math.min(failures, RETRY_DELAYS_MS.length - 1)]!);
+          failures += 1;
+        }
       }
     };
     void run();
-  }, []);
+
+    return () => {
+      cancelled = true;
+      for (const t of timers) clearTimeout(t);
+    };
+  }, [onPaired]);
 
   return (
-    <main className="fixed inset-0 flex flex-col items-center justify-center bg-bg font-sans text-text">
+    <main
+      className="fixed inset-0 flex flex-col items-center justify-center bg-bg font-sans text-text"
+      style={{ opacity: fading ? 0 : 1, transition: "opacity 600ms ease" }}
+    >
       <h1 className="text-heading font-semibold">Koble til denne iPaden</h1>
 
       <div
@@ -49,7 +129,12 @@ export function PairingScreen() {
       </p>
 
       <div className="absolute bottom-12 flex items-center gap-3 text-label text-muted">
-        {failed ? (
+        {approved ? (
+          <>
+            <CheckIcon size={24} className="text-accent" />
+            <span>Koblet til</span>
+          </>
+        ) : failed ? (
           <span>Ingen kontakt med serveren. Prøver igjen …</span>
         ) : (
           <>
