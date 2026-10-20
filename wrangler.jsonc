@@ -11,8 +11,7 @@
     {
       "binding": "DB",
       "database_name": "ipadhub",
-      // Placeholder; plan 01-03 replaces this with the real id from `wrangler d1 create`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "0b37f539-fac4-45b5-a501-afc69284bf07",
       "migrations_dir": "drizzle"
     }
   ],
