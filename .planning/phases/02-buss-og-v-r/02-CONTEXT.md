@@ -40,8 +40,11 @@ Krav: BUS-01–BUS-05, WTHR-01–WTHR-03. Kalender og e-post er IKKE med (fase 3
 - **D-18:** Nedbør i stripen vises som **tall i mm** (f.eks. «1,2»; norsk desimalkomma). Ingen søyler.
 - **D-19:** Værsymboler: **MET/Yr sine offisielle symboler** (metno/weathericons, åpen lisens). Kildehenvisning «Data fra MET Norway» / Yr vises i modulen (WTHR-03); lisens/attribusjon dokumenteres.
 
+### Rutenett (bestemt under UI-fasen)
+- **D-20:** Modulfeltet blir en **bento-layout** i stedet for lik 2×2: Vær over hele bredden øverst, Buss høy til venstre under, Kalender og E-post stablet til høyre. Kun `grid-template-areas` endres; plassene, rekkefølgen og `ModuleFrame` er uendret. Konsekvens: Kalender og E-post får mindre felt (~266×178 px) i fase 3–4.
+- **D-21:** Temperaturen nå vises stort (96 px, Display-M). «+N min» vises fra **2 min** forsinkelse.
+
 ### Claude's Discretion
-- **Plass i rutenettet:** ikke diskutert — behold 2×2 fra fase 1 (Buss, Vær, Kalender, E-post). Tilpass innholdet så buss og vær er lesbare på 1–2 m innenfor sine felt.
 - Nøyaktig terskel for minutter→klokkeslett (~15 min), sanntidsmarkørens form, oransjefargens verdi og fontstørrelser (fastsettes i UI-SPEC).
 - Oppdateringsstrategi per provider (TTL/stale-while-revalidate for buss ~15–30 s, vær etter MET `Expires`), `staleAfterSec` per modul, og om polling skjer på forespørsel eller via Cron (research avgjør innen gratisnivået).
 - Om symbolene leveres som statiske SVG-er i `public/` eller inline.
