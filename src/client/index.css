@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "../shared/theme.css";
+
+html,
+body {
+  background: #000;
+  color: #F2F2F7;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+  margin: 0;
+}
+
+@keyframes pairing-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}

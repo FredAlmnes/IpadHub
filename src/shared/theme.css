@@ -1,0 +1,16 @@
+@theme {
+  --color-bg: #000000;
+  --color-surface: #1C1C1E;
+  --color-hairline: #2C2C2E;
+  --color-text: #F2F2F7;
+  --color-muted: #8E8E93;
+  --color-accent: #8FB8DE;
+  --color-destructive: #E5645A;
+  --color-night: #5A5A5A;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --text-label: 16px;
+  --text-body: 24px;
+  --text-heading: 40px;
+  --text-display-m: 96px;
+  --text-display-l: clamp(160px, 16vw, 192px);
+}
