@@ -489,16 +489,20 @@ The `projects` layout and `wrangler.configPath` option name are taken from the p
 | A10 | Plugin test config option names (`wrangler.configPath`, `projects`) | Code Examples | Low; check types on install |
 | A11 | DST dates (2026-10-25, 2027-03-28) and week-53 claim for 2026 | Pattern 5 | Low; covered by tests |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **iPad model and iPadOS version**
    - Known: needs 18.4+ for Wake Lock in standalone mode; OLED models have real burn-in risk.
    - Unclear: actual model/OS. Recommendation: ask the user; first plan task or checklist step records it.
+   - RESOLVED: user confirmed iPadOS 18.4+ (PROJECT.md); exact model/OS is recorded on-device in 01-08.
 2. **Worker URL / domain**
    - Known: `workers.dev` works; Google redirect URI must match exactly.
    - Unclear: whether the user wants a custom domain. Recommendation: start on `workers.dev`; the plan includes a manual step to create the OAuth client after the first deploy gives the URL.
+   - RESOLVED: workers.dev used; URL recorded in 01-03-SUMMARY; OAuth client created after deploy in 01-08.
 3. **Name/icon for the Home Screen app** — Claude's discretion; use "IpadHub" and a simple dark icon generated during implementation.
+   - RESOLVED: name "IpadHub" and icons generated in 01-06.
 4. **Does Guided Access allow Touch while keeping Auto-Lock disabled on the user's iPad?** Verify on device; if not, tap-to-wake (D-17) degrades to the Shortcut-based brightness approach only.
+   - RESOLVED: checklist (01-04 /admin/oppsett) keeps Touch on in Guided Access; verified on-device in 01-08.
 
 ## Environment Availability
 
