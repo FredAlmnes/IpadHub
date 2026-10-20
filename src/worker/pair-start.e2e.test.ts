@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { app } from "./app";
 
 const BASE = "https://ipadhub.test";
@@ -22,6 +22,10 @@ async function seedRow(i: number, expiresAt: number) {
     .bind(`seed-${i}`, `seed-code-${i}`, `seed-poll-${i}`, expiresAt, Date.now())
     .run();
 }
+
+beforeEach(async () => {
+  await env.DB.prepare("DELETE FROM pairing_requests").run();
+});
 
 describe("POST /api/pair/start", () => {
   it("A: returns a formatted code, pollSecret and expiresIn", async () => {
