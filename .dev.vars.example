@@ -2,4 +2,5 @@ GOOGLE_CLIENT_ID=replace-me.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=replace-me
 SESSION_SECRET=generate-with-openssl-rand-base64-32
 ADMIN_EMAILS=you@example.com
+# sett til 1 lokalt for å se utdatert/feil-tilstander
 DEMO_MODULES=0
