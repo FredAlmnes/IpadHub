@@ -11,7 +11,7 @@ IpadHub bygges som vertikale skiver, der hver fase gir en iPad som kan brukes i 
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Skall, enhetsparing og alltid-på klokke** - Sikker fullskjerm-PWA med klokke, nattmodus, selvoppdatering og staleness-visning
+- [x] **Phase 1: Skall, enhetsparing og alltid-på klokke** - Sikker fullskjerm-PWA med klokke, nattmodus, selvoppdatering og staleness-visning (completed 2026-10-20)
 - [ ] **Phase 2: Buss og vær** - Sanntidsavganger fra Entur og vær fra MET på skjermen
 - [ ] **Phase 3: Google-tilkobling og kalender** - Google OAuth med varig tilkobling og dagens kalender
 - [ ] **Phase 4: Viktig e-post med AI** - Gmail-meldinger som krever handling, vurdert av Claude med kostnadstak
@@ -32,7 +32,7 @@ IpadHub bygges som vertikale skiver, der hver fase gir en iPad som kan brukes i 
   4. Om natten bytter skjermen til en mørk, dempet visning med bare klokken, og innholdet flytter seg litt over tid mot innbrenning
   5. En forespørsel uten gyldig enhetstoken avvises, og bruker kan trekke tilbake tilgangen til en paret enhet; appen laster seg selv på nytt daglig og ved ny versjon, og oppsettsjekklisten for iPaden er fulgt
 
-**Plans:** 7/8 plans executed
+**Plans:** 8/8 plans complete
 Plans:
 **Wave 1**
 
@@ -55,7 +55,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 01-08-PLAN.md — Go-live: Google OAuth-klient og secrets, deploy, bekreftelse på ekte iPad over natten
+- [x] 01-08-PLAN.md — Go-live: Google OAuth-klient og secrets, deploy, bekreftelse på ekte iPad over natten
 
 **UI hint**: yes
 
@@ -115,7 +115,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 (Fase 2 og 3 er uavhengige av 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Skall, enhetsparing og alltid-på klokke | 7/8 | In Progress|  |
+| 1. Skall, enhetsparing og alltid-på klokke | 8/8 | Complete   | 2026-10-20 |
 | 2. Buss og vær | 0/TBD | Not started | - |
 | 3. Google-tilkobling og kalender | 0/TBD | Not started | - |
 | 4. Viktig e-post med AI | 0/TBD | Not started | - |
