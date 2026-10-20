@@ -151,3 +151,81 @@ describe("POST /admin/pair/approve", () => {
     expect(res.headers.get("Location")).toBe("/admin/login");
   });
 });
+
+describe("revoke", () => {
+  it("GET shows the confirm page", async () => {
+    await insertDevice("d1", "Stue-iPad");
+    const res = await get("/admin/devices/d1/revoke");
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain("Trekk tilbake «Stue-iPad»? iPaden mister tilgangen med en gang og viser paringskoden igjen.");
+    expect(html).toContain('action="/admin/devices/d1/revoke"');
+    expect(html).toContain("Trekk tilbake");
+    expect(html).toContain("Behold iPaden");
+  });
+
+  it("POST revokes, flashes, and the device cookie then gets 401", async () => {
+    await insertDevice("d1", "Stue-iPad");
+    const snap = () => app.request(`${BASE}/api/snapshot`, { headers: { Cookie: "device=token-d1" } }, env);
+    expect((await snap()).status).toBe(200);
+    const res = await post("/admin/devices/d1/revoke", {});
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/admin?revoked=Stue-iPad");
+    const row = await env.DB.prepare("SELECT revoked_at FROM devices WHERE id = 'd1'").first<{
+      revoked_at: number | null;
+    }>();
+    expect(row?.revoked_at).toBeGreaterThan(0);
+    const html = await (await get("/admin?revoked=Stue-iPad")).text();
+    expect(html).toContain("«Stue-iPad» er trukket tilbake.");
+    expect(html).toContain("Ingen iPader ennå");
+    expect((await snap()).status).toBe(401);
+  });
+
+  it("another user's or unknown device -> 404, nothing changed", async () => {
+    await env.DB.prepare("INSERT INTO users (id, email, created_at) VALUES ('user-2', 'x@example.com', ?)")
+      .bind(Date.now())
+      .run();
+    await insertDevice("d9", "Andres", "user-2");
+    expect((await get("/admin/devices/d9/revoke")).status).toBe(404);
+    expect((await post("/admin/devices/d9/revoke", {})).status).toBe(404);
+    expect((await post("/admin/devices/nope/revoke", {})).status).toBe(404);
+    const row = await env.DB.prepare("SELECT revoked_at FROM devices WHERE id = 'd9'").first<{
+      revoked_at: number | null;
+    }>();
+    expect(row?.revoked_at).toBeNull();
+  });
+});
+
+describe("logout", () => {
+  it("clears the admin cookie and redirects to login", async () => {
+    const res = await post("/admin/logout", {});
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/admin/login");
+    expect(res.headers.get("Set-Cookie")).toMatch(/admin_session=;.*Max-Age=0/);
+  });
+});
+
+describe("GET /admin/oppsett", () => {
+  it("requires a session", async () => {
+    const res = await get("/admin/oppsett", false);
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/admin/login");
+  });
+
+  it("shows the 9-step checklist", async () => {
+    const res = await get("/admin/oppsett");
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain("Oppsett av iPaden");
+    expect((html.match(/<li/g) ?? []).length).toBe(9);
+    for (const s of [
+      "Autolås &gt; Aldri",
+      "Veiledet tilgang",
+      "La Berøring stå på",
+      "Kl. 23:00: Angi lysstyrke lavt",
+      "Kl. 06:00: Angi lysstyrke høyt",
+    ]) {
+      expect(html).toContain(s);
+    }
+  });
+});
