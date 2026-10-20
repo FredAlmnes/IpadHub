@@ -13,6 +13,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply ipadhub --local",
     "db:migrate:remote": "wrangler d1 migrations apply ipadhub --remote",
+    "pair:approve": "node scripts/approve-pairing.mjs",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
