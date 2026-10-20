@@ -32,7 +32,7 @@ IpadHub bygges som vertikale skiver, der hver fase gir en iPad som kan brukes i 
   4. Om natten bytter skjermen til en mørk, dempet visning med bare klokken, og innholdet flytter seg litt over tid mot innbrenning
   5. En forespørsel uten gyldig enhetstoken avvises, og bruker kan trekke tilbake tilgangen til en paret enhet; appen laster seg selv på nytt daglig og ved ny versjon, og oppsettsjekklisten for iPaden er fulgt
 
-**Plans:** 5/8 plans executed
+**Plans:** 7/8 plans executed
 Plans:
 **Wave 1**
 
@@ -50,8 +50,8 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 01-06-PLAN.md — Hjemskjerm-PWA: manifest, ikoner, service worker, daglig/versjon/watchdog-reload
-- [ ] 01-07-PLAN.md — Modulplasser med data-alder, offline-markør og feilisolering per modul
+- [x] 01-06-PLAN.md — Hjemskjerm-PWA: manifest, ikoner, service worker, daglig/versjon/watchdog-reload
+- [x] 01-07-PLAN.md — Modulplasser med data-alder, offline-markør og feilisolering per modul
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
@@ -115,7 +115,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 (Fase 2 og 3 er uavhengige av 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Skall, enhetsparing og alltid-på klokke | 5/8 | In Progress|  |
+| 1. Skall, enhetsparing og alltid-på klokke | 7/8 | In Progress|  |
 | 2. Buss og vær | 0/TBD | Not started | - |
 | 3. Google-tilkobling og kalender | 0/TBD | Not started | - |
 | 4. Viktig e-post med AI | 0/TBD | Not started | - |
