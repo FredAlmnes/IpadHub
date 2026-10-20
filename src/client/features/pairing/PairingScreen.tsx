@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { pollPairing, startPairing } from "../../api";
 import { CheckIcon } from "../../icons";
+import { useDrift } from "../../hooks/useDrift";
 
 const RETRY_DELAYS_MS = [3000, 6000, 12000, 30000];
 const POLL_INTERVAL_MS = 3000;
@@ -110,10 +111,16 @@ export function PairingScreen({ onPaired }: { onPaired: () => void }) {
     };
   }, [onPaired]);
 
+  const drift = useDrift("day");
+
   return (
     <main
       className="fixed inset-0 flex flex-col items-center justify-center bg-bg font-sans text-text"
-      style={{ opacity: fading ? 0 : 1, transition: "opacity 600ms ease" }}
+      style={{
+        opacity: fading ? 0 : 1,
+        transform: `translate(${drift.x}px, ${drift.y}px)`,
+        transition: "opacity 600ms ease, transform 30s ease-in-out",
+      }}
     >
       <h1 className="text-heading font-semibold">Koble til denne iPaden</h1>
 

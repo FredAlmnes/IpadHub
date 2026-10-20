@@ -2,10 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { UnpairedError } from "./api";
 import { useSnapshot } from "./hooks/useSnapshot";
+import { useWakeLock } from "./hooks/useWakeLock";
 import { DisplayScreen } from "./features/display/DisplayScreen";
 import { PairingScreen } from "./features/pairing/PairingScreen";
 
 export function App() {
+  useWakeLock();
   const queryClient = useQueryClient();
   // Start on the clock; only an exact 401 shows pairing (network errors, 5xx and 429 never do).
   const [unpaired, setUnpaired] = useState(false);
