@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import type { AppEnv } from "./env";
 import { deviceAuth } from "./middleware/device-auth";
 import { pairRoutes } from "./routes/api-pair";
+import { snapshotRoutes } from "./routes/api-snapshot";
 
 export const app = new Hono<AppEnv>();
 
@@ -15,6 +16,8 @@ app.route("/api/pair", pairRoutes);
 
 // Default-deny (SEC-02): everything under /api except /api/pair/* needs a valid device cookie.
 app.use("/api/*", (c, next) => (c.req.path.startsWith("/api/pair/") ? next() : deviceAuth(c, next)));
+
+app.route("/api/snapshot", snapshotRoutes);
 
 // Only reachable when authenticated.
 app.all("/api/*", (c) => c.json({ error: "not_found" }, 404));
